@@ -9,8 +9,8 @@ import SearchInput from './components/UI/SearchInput/SearchInput';
 import SideBar from './components/SideBar/SideBar';
 import Header from './components/Header/Header';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ProductCard from './components/ProductCard/ProductCard';
 import AddProduct from './components/AddProduct/AddProduct';
+import Modal from './components/UI/Modal/Modal';
 
 function App() {
 
@@ -19,6 +19,7 @@ function App() {
   const [query, setQuery] = useState("")
   const [sortType, setSortType] = useState(null)
   const [inCart, setInCart] = useState([])
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const getSortedProducts = () => {
     if (sortType === 'asc') {
@@ -62,16 +63,18 @@ function App() {
           <ProducList getSortedProducts={getSortedProducts} query={query} addToCart={addToCart}/>
         </div>
         <SideBar inCart={inCart} increment={(prod) => setInCart([...inCart, prod])} decrement={removeFromCart}/>
+        <Modal visible={isModalVisible} setVisible={setIsModalVisible}>
+          <AddProduct confirmation={() => setIsModalVisible(false)}/>
+        </Modal>
       </div>
     )
   }
 
   return (
     <BrowserRouter>
-      <Header/>
+      <Header setIsModalVisible={() => setIsModalVisible(true)} isModalVisible={isModalVisible}/>
       <Routes>
         <Route path='/' element={mainPage()}/>
-        <Route path='/add' element={<AddProduct/>}/>
       </Routes>
     </BrowserRouter>
   );

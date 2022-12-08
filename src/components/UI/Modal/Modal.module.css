@@ -1,0 +1,42 @@
+.modal {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+}
+
+.modalContent {
+    padding: 40px;
+    border-radius: 20px;
+    width: auto;
+    height: auto;
+    min-width: 200px;
+    min-height: 200px;
+    max-height: 800px;
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    overflow-y: scroll;
+}
+
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent > *:hover {
+    transition: 0.2s;
+    border-radius: 15px;
+    opacity: 1;
+}
+
+.modalContent > * {
+    opacity: 0.9;
+}

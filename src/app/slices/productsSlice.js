@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { nanoid } from "@reduxjs/toolkit";
 
 const initialState = [
     {id: 1, title: "Skater Black Sweatshirt", price: 25.90, img1: "https://react-shopping-cart-67954.firebaseapp.com/static/media/8552515751438644-1-product.b6128dd1df3de552cf1b.webp", 
@@ -21,11 +22,32 @@ const initialState = [
     img2: "https://react-shopping-cart-67954.firebaseapp.com/static/media/5619496040738316-2-product.eacb81485e73d2239281.webp", inStock: 0, description: "", freeShipping: true},
 ]
 
-export const postsSlice = createSlice({
+export const productsSlice = createSlice({
     name: "products",
     initialState,
-    reducers: {}
+    reducers: {
+        productAdded: {
+            reducer(state, action) {
+                state.push(action.payload)
+            },
+            prepare(title, img1, price, inStock) {
+                return {
+                    payload: {
+                        title,
+                        img1,
+                        price: Number(price), 
+                        inStock,
+                        id: nanoid(),
+                        img2: "",
+                        description: "",
+                        freeShipping: false,
+                    }
+                }
+            }
+        },
+    }
 })
 
-export default postsSlice.reducer;
+export default productsSlice.reducer;
 export const selectAllProducts = (state) => state.products
+export const { productAdded } = productsSlice.actions
