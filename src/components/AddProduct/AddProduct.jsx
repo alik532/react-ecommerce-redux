@@ -13,7 +13,7 @@ const AddProduct = (props) => {
 
     const [title, setTitle] = useState("")
     const [price, setPrice] = useState("")
-    const [inStock, setInStock] = useState(0)
+    const [inStock, setInStock] = useState("")
     const [selectedImage, setSelectedImage] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const images = useSelector(selectAllImages)
@@ -28,10 +28,12 @@ const AddProduct = (props) => {
     const confirmation = () => {
         console.log("added")
         dispatch(productAdded(title, selectedImage, price, inStock))
-        props.confirmation()
         setInStock("")
         setPrice("")
         setTitle("")
+        setSelectedImage(null)
+        props.confirmation()
+        console.log("added2")
     }
 
     return (
@@ -53,9 +55,9 @@ const AddProduct = (props) => {
             <div className={classes.configure}>
                 <div>
                 <h1 className={classes.edit}>Edit your product</h1>
-                    <SearchInput placeholder="Title" onChange={(e) => setTitle(e.target.value)}/>
-                    <SearchInput placeholder="Price" onChange={(e) => setPrice(e.target.value)}/>
-                    <SearchInput placeholder="In Stock" onChange={(e) => setInStock(e.target.value)}/>
+                    <SearchInput placeholder="Title" onChange={(e) => setTitle(e.target.value)} value={title}/>
+                    <SearchInput placeholder="Price" onChange={(e) => setPrice(e.target.value)} value={price}/>
+                    <SearchInput placeholder="In Stock" onChange={(e) => setInStock(e.target.value)} value={inStock}/>
                 </div>
                 <div className={classes.confirm} onClick={confirmation}>
                     <SortButton>Confirm</SortButton>
